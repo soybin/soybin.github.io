@@ -1,11 +1,11 @@
 /* define color palette */
 /* https://coolors.co/0c3745-5079a5-92dce5-ffdcd6-f67984 */
 :root {
-	--bg: #FFDCD6;
-	--myName: #F67984;
-	--textC: #0C3745;
-	--titles: #5079A5;
-	--hover: #92DCE5;
+	--text: #DEF5F7;
+	--primary: #F6A2AA;
+	--bg: #092934;
+	--titles: #FAC8CD;
+	--hover: #F78D99;
 }
 
 /*****************************************************************************/
@@ -27,8 +27,7 @@ html, body {
 
 body {
   background-color: var(--bg);
-  font: 13.34px Monaco, Courier;
-  *font-size: small;
+  font: 20px monaco, monospace, courier;
   text-align: center;
 }
 
@@ -46,7 +45,7 @@ p {
 }
 
 a {
-  color: var(--textC);
+  color: var(--primary);
 }
 
 a:hover {
@@ -66,16 +65,15 @@ table {
 
 ul.posts {
   list-style-type: none;
+	color: var(--text);
   margin-bottom: 2em;
 }
 
   ul.posts li {
-    line-height: 1.75em;
-		color: var(--textC);
+		line-height: 1.75em;
   }
 
   ul.posts span {
-    color: var(--myName);
     font-family: monaco, "Courier New", monospace;
     font-size: 80%;
   }
@@ -95,15 +93,15 @@ ul.posts {
 }
 
 .title {
-  color: var(--textC);
+  /*color: var(--text);*/
   font-weight: bold;
-  border-bottom: 1px solid var(--textC);
+  border-bottom: 1px solid var(--text);
 	padding: 1em 0em;
   margin-bottom: 1em;
 }
 
   .site .title a {
-    color: var(--myName);
+    color: var(--primary);
 		font-size: 110%;
     text-decoration: none;
   }
@@ -111,6 +109,10 @@ ul.posts {
   .site .title a:hover {
     color: var(--hover);
   }
+
+	.site .title a:link {
+		color: var(--primary);
+	}
 
   .site .title a.extra {
     color: var(--titles);
@@ -123,14 +125,18 @@ ul.posts {
     color: var(--hover);
   }
 
+	.site .title a.extra:link {
+		color: var(--primary);
+	}
+
   .site .meta {
-    color: var(--textC);
+    color: var(--text);
   }
 
   .site .footer {
     font-size: 80%;
-    color: var(--myName);
-    border-top: 1px solid var(--textC);
+    color: var(--primary);
+    border-top: 1px solid var(--text);
     margin-top: 2em;
     overflow: hidden;
   }
@@ -154,7 +160,7 @@ ul.posts {
 
   #post pre {
     border: 1px solid #ddd;
-    background-color: var(--textC);
+    background-color: var(--text);
     padding: 0 .4em;
   }
 
@@ -165,7 +171,7 @@ ul.posts {
 
   #post code {
     border: 1px solid #ddd;
-    background-color: var(--textC);
+    background-color: var(--text);
     font-size: 90%;
     padding: 0 .2em;
   }

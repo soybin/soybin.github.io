@@ -4,7 +4,7 @@
  <title>pablo peñarroja millán</title>
  <link href="http://soybin.github.io/atom.xml" rel="self"/>
  <link href="http://soybin.github.io/"/>
- <updated>2020-06-14T22:14:43+02:00</updated>
+ <updated>2020-06-14T23:09:54+02:00</updated>
  <id>http://soybin.github.io/</id>
  <author>
    <name>pablo peñarroja millán</name>
@@ -14,7 +14,7 @@
  
  <entry>
    <title>physically based rendering fractals</title>
-   <link href="http://tom.preston-werner.com/2020/04/25/physically-based-rendering-fractals.html"/>
+	 <link href="https://soybin.github.io/2020/04/25/physically-based-rendering-fractals.html"/>
    <updated>2020-04-25T00:00:00+02:00</updated>
 	 <id>http://soybin.github.io/2020/04/25/physically-based-rendering-fractals</id>
    <content type="html">&lt;h1 id=&quot;physically-based-rendering-fractals&quot;&gt;physically based rendering fractals&lt;/h1&gt;

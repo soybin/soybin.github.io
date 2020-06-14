@@ -17,7 +17,7 @@ layout: nil
  {% for post in site.posts %}
  <entry>
    <title>{{ post.title }}</title>
-   <link href="http://tom.preston-werner.com{{ post.url }}"/>
+	 <link href="https://soybin.github.io{{ post.url }}"/>
    <updated>{{ post.date | date_to_xmlschema }}</updated>
 	 <id>http://soybin.github.io{{ post.id }}</id>
    <content type="html">{{ post.content | xml_escape }}</content>
