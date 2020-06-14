@@ -1,0 +1,195 @@
+/* define color palette */
+/* https://coolors.co/0c3745-5079a5-92dce5-ffdcd6-f67984 */
+:root {
+	--bg: #FFDCD6;
+	--myName: #F67984;
+	--textC: #0C3745;
+	--titles: #5079A5;
+	--hover: #92DCE5;
+}
+
+/*****************************************************************************/
+/*
+/* Common
+/*
+/*****************************************************************************/
+
+/* Global Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--bg);
+  font: 13.34px Monaco, Courier;
+  *font-size: small;
+  text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: 100%;
+	color: var(--titles);
+}
+
+h1 {
+  margin-bottom: 1em;
+}
+
+p {
+  margin: 1em 0;
+}
+
+a {
+  color: var(--textC);
+}
+
+a:hover {
+  color: var(--hover);
+}
+
+table {
+  font-size: inherit;
+  font: 100%;
+}
+
+/*****************************************************************************/
+/*
+/* Home
+/*
+/*****************************************************************************/
+
+ul.posts {
+  list-style-type: none;
+  margin-bottom: 2em;
+}
+
+  ul.posts li {
+    line-height: 1.75em;
+		color: var(--textC);
+  }
+
+  ul.posts span {
+    color: var(--myName);
+    font-family: monaco, "Courier New", monospace;
+    font-size: 80%;
+  }
+
+/*****************************************************************************/
+/*
+/* Site
+/*
+/*****************************************************************************/
+
+.site {
+  font-size: 100%;
+  text-align: justify;
+  width: 40em;
+  margin: 3em auto 2em auto;
+  line-height: 1.5em;
+}
+
+.title {
+  color: var(--textC);
+  font-weight: bold;
+  border-bottom: 1px solid var(--textC);
+	padding: 1em 0em;
+  margin-bottom: 1em;
+}
+
+  .site .title a {
+    color: var(--myName);
+		font-size: 110%;
+    text-decoration: none;
+  }
+
+  .site .title a:hover {
+    color: var(--hover);
+  }
+
+  .site .title a.extra {
+    color: var(--titles);
+    text-decoration: none;
+		font-size: 90%;
+    margin-left: 1em;
+  }
+
+  .site .title a.extra:hover {
+    color: var(--hover);
+  }
+
+  .site .meta {
+    color: var(--textC);
+  }
+
+  .site .footer {
+    font-size: 80%;
+    color: var(--myName);
+    border-top: 1px solid var(--textC);
+    margin-top: 2em;
+    overflow: hidden;
+  }
+
+    .site .footer .contact {
+      float: left;
+      margin-right: 3em;
+    }
+
+/*****************************************************************************/
+/*
+/* Posts
+/*
+/*****************************************************************************/
+
+#post {
+
+}
+
+  /* standard */
+
+  #post pre {
+    border: 1px solid #ddd;
+    background-color: var(--textC);
+    padding: 0 .4em;
+  }
+
+  #post ul,
+  #post ol {
+    margin-left: 1.35em;
+  }
+
+  #post code {
+    border: 1px solid #ddd;
+    background-color: var(--textC);
+    font-size: 90%;
+    padding: 0 .2em;
+  }
+
+    #post pre code {
+      border: none;
+    }
+
+  /* terminal */
+
+  #post pre.terminal {
+    border: 1px solid black;
+    background-color: #333;
+    color: white;
+  }
+
+  #post pre.terminal code {
+    background-color: #333;
+  }
+
+#related {
+  margin-top: 2em;
+}
+
+  #related h2 {
+    margin-bottom: 1em;
+  }

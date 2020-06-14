@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title>pablo peñarroja millán</title>
+ <link href="http://soybin.github.io/atom.xml" rel="self"/>
+ <link href="http://soybin.github.io/"/>
+ <updated>2020-06-14T22:14:43+02:00</updated>
+ <id>http://soybin.github.io/</id>
+ <author>
+   <name>pablo peñarroja millán</name>
+   <email>soybinary@gmail.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>physically based rendering fractals</title>
+   <link href="http://tom.preston-werner.com/2020/04/25/physically-based-rendering-fractals.html"/>
+   <updated>2020-04-25T00:00:00+02:00</updated>
+	 <id>http://soybin.github.io/2020/04/25/physically-based-rendering-fractals</id>
+   <content type="html">&lt;h1 id=&quot;physically-based-rendering-fractals&quot;&gt;physically based rendering fractals&lt;/h1&gt;
+
+&lt;p class=&quot;meta&quot;&gt;28 Apr 2020 - Menorca&lt;/p&gt;
+
+&lt;p&gt;the devel…&lt;/p&gt;
+
+&lt;h2 id=&quot;physically-based-rendering-basics&quot;&gt;physically based rendering basics&lt;/h2&gt;
+
+&lt;p&gt;it’s pretty cool&lt;/p&gt;
+
+&lt;h2 id=&quot;creating-fractals&quot;&gt;creating fractals&lt;/h2&gt;
+
+&lt;h2 id=&quot;applying-pbr-to-distance-estimated-fractals&quot;&gt;applying pbr to distance estimated fractals&lt;/h2&gt;
+&lt;p&gt;ez&lt;/p&gt;
+</content>
+ </entry>
+ 
+ 
+</feed>
