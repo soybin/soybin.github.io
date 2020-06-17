@@ -4,7 +4,7 @@
  <title>pablo peñarroja millán</title>
  <link href="http://soybin.github.io/atom.xml" rel="self"/>
  <link href="http://soybin.github.io/"/>
- <updated>2020-06-14T23:10:44+02:00</updated>
+ <updated>2020-06-16T01:32:39+02:00</updated>
  <id>http://soybin.github.io/</id>
  <author>
    <name>pablo peñarroja millán</name>
@@ -13,24 +13,12 @@
 
  
  <entry>
-   <title>physically based rendering fractals</title>
-	 <link href="https://soybin.github.io/2020/04/25/physically-based-rendering-fractals.html"/>
+   <title>creating</title>
+	 <link href="https://soybin.github.io/2020/04/25/cpu-based-rendering.html"/>
    <updated>2020-04-25T00:00:00+02:00</updated>
-	 <id>http://soybin.github.io/2020/04/25/physically-based-rendering-fractals</id>
-   <content type="html">&lt;h1 id=&quot;physically-based-rendering-fractals&quot;&gt;physically based rendering fractals&lt;/h1&gt;
+	 <id>http://soybin.github.io/2020/04/25/cpu-based-rendering</id>
+   <content type="html">&lt;h1 id=&quot;creating&quot;&gt;creating&lt;/h1&gt;
 
-&lt;p class=&quot;meta&quot;&gt;28 Apr 2020 - Menorca&lt;/p&gt;
-
-&lt;p&gt;the devel…&lt;/p&gt;
-
-&lt;h2 id=&quot;physically-based-rendering-basics&quot;&gt;physically based rendering basics&lt;/h2&gt;
-
-&lt;p&gt;it’s pretty cool&lt;/p&gt;
-
-&lt;h2 id=&quot;creating-fractals&quot;&gt;creating fractals&lt;/h2&gt;
-
-&lt;h2 id=&quot;applying-pbr-to-distance-estimated-fractals&quot;&gt;applying pbr to distance estimated fractals&lt;/h2&gt;
-&lt;p&gt;ez&lt;/p&gt;
 </content>
  </entry>
  
