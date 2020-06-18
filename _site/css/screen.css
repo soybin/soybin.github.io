@@ -38,25 +38,39 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
 	text-align: center;
-	padding-bottom: 1.5em;
-	border-bottom: 4px solid var(--text);
-	font-size: 130%;
-}
-
-h2 {
-	padding: 1em 0em;
-	border-bottom: 1px solid var(--text);
+	margin-top: 1em;
 	margin-bottom: 1em;
-	font-size: 120%;
-}
-
-h3 {
+	padding-bottom: 2em;
+	border-bottom: 1px solid var(--text);
 	font-size: 110%;
 }
 
-h4 {
+h2 {
+	text-align: center;
+	padding: 1em 0em;
+	border-bottom: 1px solid var(--text);
 	margin-bottom: 1em;
 	font-size: 100%;
+}
+
+h3 {
+	text-align: left;
+	font-size: 100%;
+}
+
+h4 {
+	margin-bottom: 0em;
+	font-size: 100%;
+}
+
+u {
+	text-decoration: none;
+	padding-bottom: 0.1em;
+	border-bottom: 1px solid var(--primary);
+}
+
+u:hover {
+	border-bottom: 1px solid var(--hover);
 }
 
 p {
@@ -67,7 +81,6 @@ a {
 	text-decoration: none;	
   color: var(--primary);
 	font-size: 100%;
-	font-size: 120%;
 }
 
 a:hover {
@@ -92,12 +105,13 @@ ul.posts {
 }
 
   ul.posts li {
-		line-height: 1.75em;
+		line-height: 2.25em;
   }
 
   ul.posts span {
-    font-family: Monaco, monospace, Courier;
-    font-size: 80%;
+    font-family: monospace, Courier;
+		font-style: italic;
+    font-size: 90%;
   }
 
 /*****************************************************************************/
@@ -116,7 +130,7 @@ ul.posts {
 
 .title {
   font-weight: bold;
-  border-bottom: 4px solid var(--text);
+  border-bottom: 1px solid var(--text);
 	padding: 1em 0em;
   margin-bottom: 2em;
 }
@@ -153,7 +167,7 @@ ul.posts {
   }
 
   .site .footer {
-    font-size: 100%;
+    font-size: 90%;
     color: var(--primary);
     border-top: 1px solid var(--text);
     margin-top: 2em;
@@ -179,7 +193,7 @@ ul.posts {
 
   #post pre {
 		margin-top: 1em;
-    border: 1px solid #ddd;
+    border: 2px solid #ddd;
     background-color: var(--bg);
     padding: 0 .4em;
   }
@@ -190,7 +204,7 @@ ul.posts {
   }
 
   #post code {
-    border: 1px solid #ddd;
+    border: 2px solid #ddd;
     background-color: var(--bg);
     font-size: 90%;
     padding: 0 .2em;
@@ -203,7 +217,7 @@ ul.posts {
   /* terminal */
 
   #post pre.terminal {
-    border: 1px solid black;
+    border: 2px solid black;
     background-color: #333;
     color: black;
   }

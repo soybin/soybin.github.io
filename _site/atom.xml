@@ -4,7 +4,7 @@
  <title>pablo peñarroja millán</title>
  <link href="http://soybin.github.io/atom.xml" rel="self"/>
  <link href="http://soybin.github.io/"/>
- <updated>2020-06-18T19:46:05+02:00</updated>
+ <updated>2020-06-19T00:19:29+02:00</updated>
  <id>http://soybin.github.io/</id>
  <author>
    <name>pablo peñarroja millán</name>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>raymarching geometry & path-tracing the scene</title>
-	 <link href="https://soybin.github.io/2020/04/01/raymarching.html"/>
+	 <link href="https://soybin.github.io/articles/2020/04/01/raymarching.html"/>
    <updated>2020-04-01T00:00:00+02:00</updated>
-	 <id>http://soybin.github.io/2020/04/01/raymarching</id>
+	 <id>http://soybin.github.io/articles/2020/04/01/raymarching</id>
    <content type="html">&lt;!---[*fractal rendered with idyll using raymarching and path tracing*](/images/idyll/first.png){:width=&quot;100%&quot;}---&gt;
 &lt;h1 id=&quot;raymarching-geometry--path-tracing-the-scene&quot;&gt;raymarching geometry &amp;amp; path-tracing the scene&lt;/h1&gt;
 &lt;h2 id=&quot;prelude&quot;&gt;prelude&lt;/h2&gt;
@@ -81,5 +81,15 @@ I wouldn’t go as far as calling it a rendering technique on its own, since the
  </entry>
  
  
+ 
+ <entry>
+   <title>on open source</title>
+	 <link href="https://soybin.github.io/thoughts/2020/06/15/on-open-source.html"/>
+   <updated>2020-06-15T00:00:00+02:00</updated>
+	 <id>http://soybin.github.io/thoughts/2020/06/15/on-open-source</id>
+   <content type="html">&lt;p&gt;it is very cool indeed&lt;/p&gt;
+
+</content>
+ </entry>
  
 </feed>

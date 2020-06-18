@@ -14,7 +14,7 @@ layout: nil
    <email>soybinary@gmail.com</email>
  </author>
 
- {% for post in site.posts %}
+ {% for post in site.categories.articles %}
  <entry>
    <title>{{ post.title }}</title>
 	 <link href="https://soybin.github.io{{ post.url }}"/>
@@ -24,7 +24,7 @@ layout: nil
  </entry>
  {% endfor %}
  
- {% for post in site.thoughts %}
+ {% for post in site.categories.thoughts %}
  <entry>
    <title>{{ post.title }}</title>
 	 <link href="https://soybin.github.io{{ post.url }}"/>

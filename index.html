@@ -5,21 +5,22 @@ title: pablo peñarroja millán
 
 <div id="home">
 
-	<h4>articles</h4>
-  <ul class="posts">
-    {% for post in site.posts %}
-      <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
-    {% endfor %}
-  </ul>
 	<h4>projects</h4>
 	<ul class="posts">
-		<li><a class="link" href="https://github.com/soybin/idyll">idyll</a> — fractal engine</li>
-		<li><a href="https://github.com/soybin/vaaac">vaaac</a> — very awesome arm angle calculation library</li>
+		<li><u><a class="link" href="https://github.com/soybin/idyll">idyll</a></u> — fractal engine</li>
+		<li><u><a href="https://github.com/soybin/vaaac">vaaac</a></u> — very awesome arm angle calculation library</li>
+		<li><u><a href="https://github.com/soybin/cvgo">cv:go</a></u> — implementation of vaaac in cs:go</li>
 	</ul>
+	<h4>articles</h4>
+  <ul class="posts">
+    {% for post in site.categories.articles %}
+		<li><span> {{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}"><u>{{ post.title }}</u></a> </li>
+    {% endfor %}
+  </ul>
   <h4>thoughts</h4>
   <ul class="posts">
-    {% for post in site.thoughts %}
-      <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% for post in site.categories.thoughts %}
+		<li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}"><u>{{ post.title }}</u></a></li>
     {% endfor %}
 		<!---<li><a href="https://www.archlinux.org/">arch</a> — i couldn't ask for less</li>
 		<li><a href="https://github.com/i3/i3">i3</a> — bring them tiles</li>
