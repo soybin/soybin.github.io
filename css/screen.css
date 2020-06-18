@@ -37,13 +37,26 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  margin-bottom: 0em;
-	font-size: 120%;
+	text-align: center;
+	padding-bottom: 1.5em;
+	border-bottom: 4px solid var(--text);
+	font-size: 130%;
 }
 
 h2 {
-	margin-bottom: 0em;
+	padding: 1em 0em;
+	border-bottom: 1px solid var(--text);
+	margin-bottom: 1em;
+	font-size: 120%;
+}
+
+h3 {
 	font-size: 110%;
+}
+
+h4 {
+	margin-bottom: 1em;
+	font-size: 100%;
 }
 
 p {
@@ -51,7 +64,10 @@ p {
 }
 
 a {
+	text-decoration: none;	
   color: var(--primary);
+	font-size: 100%;
+	font-size: 120%;
 }
 
 a:hover {
@@ -100,7 +116,7 @@ ul.posts {
 
 .title {
   font-weight: bold;
-  border-bottom: 1px solid var(--text);
+  border-bottom: 4px solid var(--text);
 	padding: 1em 0em;
   margin-bottom: 2em;
 }
@@ -137,7 +153,7 @@ ul.posts {
   }
 
   .site .footer {
-    font-size: 80%;
+    font-size: 100%;
     color: var(--primary);
     border-top: 1px solid var(--text);
     margin-top: 2em;

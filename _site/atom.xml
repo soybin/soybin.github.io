@@ -4,7 +4,7 @@
  <title>pablo peñarroja millán</title>
  <link href="http://soybin.github.io/atom.xml" rel="self"/>
  <link href="http://soybin.github.io/"/>
- <updated>2020-06-16T01:32:39+02:00</updated>
+ <updated>2020-06-18T19:46:05+02:00</updated>
  <id>http://soybin.github.io/</id>
  <author>
    <name>pablo peñarroja millán</name>
@@ -13,14 +13,73 @@
 
  
  <entry>
-   <title>creating</title>
-	 <link href="https://soybin.github.io/2020/04/25/cpu-based-rendering.html"/>
-   <updated>2020-04-25T00:00:00+02:00</updated>
-	 <id>http://soybin.github.io/2020/04/25/cpu-based-rendering</id>
-   <content type="html">&lt;h1 id=&quot;creating&quot;&gt;creating&lt;/h1&gt;
+   <title>raymarching geometry & path-tracing the scene</title>
+	 <link href="https://soybin.github.io/2020/04/01/raymarching.html"/>
+   <updated>2020-04-01T00:00:00+02:00</updated>
+	 <id>http://soybin.github.io/2020/04/01/raymarching</id>
+   <content type="html">&lt;!---[*fractal rendered with idyll using raymarching and path tracing*](/images/idyll/first.png){:width=&quot;100%&quot;}---&gt;
+&lt;h1 id=&quot;raymarching-geometry--path-tracing-the-scene&quot;&gt;raymarching geometry &amp;amp; path-tracing the scene&lt;/h1&gt;
+&lt;h2 id=&quot;prelude&quot;&gt;prelude&lt;/h2&gt;
+&lt;p&gt;Today, I’ll explain and reflect on the logic behind the rendering pipeline that I came up with when developing  &lt;a href=&quot;https://www.youtube.com/watch?v=cFykbtJmg4A&quot;&gt;&lt;strong&gt;&lt;em&gt;idyll&lt;/em&gt;&lt;/strong&gt;&lt;/a&gt;, a fractal engine.&lt;/p&gt;
+
+&lt;p&gt;I’ll skip over the implementation details, and I’ll focus instead on the main concepts and ideas, since I can guarantee that the valuable learning experience is to implement these concepts yourself. However, checking the &lt;a href=&quot;https://www.github.com/soybin/idyll&quot;&gt;&lt;strong&gt;&lt;em&gt;source code for idyll&lt;/em&gt;&lt;/strong&gt;&lt;/a&gt; can help if you’re feeling a bit lost.&lt;/p&gt;
+
+&lt;h2 id=&quot;raymarching&quot;&gt;raymarching&lt;/h2&gt;
+&lt;h3 id=&quot;naming&quot;&gt;naming&lt;/h3&gt;
+&lt;p&gt;Most people would refer to raymarching as a rendering technique.&lt;br /&gt;
+I wouldn’t go as far as calling it a rendering technique on its own, since the raymarching algorithm itself doesn’t compute lighting, reflection nor shadowing, by default. I would say it’s more of a ‘scene interpretation technique’, if such thing even exists.&lt;/p&gt;
+
+&lt;p&gt;Anyways, that was a bit of a tangent. The important thing for you is to know what raymarching conceptually implies, since, as far as I’m concerned, there’s no formal definition, and you could apply it in various different ways.&lt;/p&gt;
+
+&lt;h3 id=&quot;distance-estimators&quot;&gt;distance estimators&lt;/h3&gt;
+&lt;p&gt;Now, imagine that you’re working on 3D space, &lt;em&gt;you need a function that tells you how far away from the closest point in the scene you are&lt;/em&gt;. That’s called a &lt;strong&gt;&lt;em&gt;distance estimator&lt;/em&gt;&lt;/strong&gt;, DE from now on.&lt;/p&gt;
+
+&lt;p&gt;The most basic DE functions represent primitive objects, and &lt;a href=&quot;https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm&quot;&gt;&lt;strong&gt;&lt;em&gt;this&lt;/em&gt;&lt;/strong&gt;&lt;/a&gt; is a fantastic resource by Íñigo Quílez on them.&lt;/p&gt;
+
+&lt;p&gt;For example, here you can see the DE function for a sphere \(sphereDE\), where \(P\) is the point in space that you’re calculating how far apart from the sphere it is, and \(S\) is the scale of the sphere (assuming the sphere is located at the origin of coordinates):&lt;/p&gt;
+
+&lt;p&gt;\[ sphereDE(P, S) = length(P) - S\]&lt;/p&gt;
+
+&lt;h3 id=&quot;what-to-do-with-a-de&quot;&gt;what to do with a DE&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Once you know how far away from something you are, you know you can safely move that distance in any direction, without having to worry about hitting that object.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Let a camera (C) be placed anywhere in your scene with a distance of 10 meters from the origin of coordinates (0, 0, 0), and looking towards it.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Let a ray have its origin (O) at the position of the camera in your scene, and give it a direction (D) towards the center of coordinates.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;A variable distance (D’) will represent how far away has the ray moved from its origin, and it’ll be initialized to zero.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Now, calculate the DE from the point O + D * D’ (the origin of the ray plus the direction of the ray times the distance the ray moved).&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;You can safely &lt;em&gt;&lt;strong&gt;march&lt;/strong&gt;&lt;/em&gt; the ray by the distance returned by the DE function, which means you can add DE(O + D * D’) to D.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Repeat this process until DE(O + D * D’) returns a value smaller than a certain arbitrary threshold (1e-4 for example), which means that the ray is close enough to the surface of the geometry for it to be considered an intersection. Obviously the ray won’t get to hit the geometry itself because of Zeno’s paradox, so it’s an estimation, hence the name distance estimator.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;reflection-on-raymarching&quot;&gt;reflection on raymarching&lt;/h3&gt;
+
+&lt;p&gt;This means that as long as you can derive a function that, for any given point in 3d space, returns its distance from the closest point to any geometry in the scene, you can render pretty much anything with an impressive performance. Adding dynamic lighting, shadowing, occlusion and surface color would have a very low computational cost. Even changing the geometry’s scale, position and rotation. Anything is valid, because everything is dynamic and computed in real time.&lt;/p&gt;
+
+&lt;p&gt;It’s also the reason why raymarching is not mainstream in the videogame industry: you &lt;strong&gt;&lt;em&gt;need&lt;/em&gt;&lt;/strong&gt; a DE function, and in order for it to run in real time, all of it has to be computed in a fragment shader on the GPU side.&lt;/p&gt;
+
+&lt;p&gt;When you have a world with hundreds of independent entities interacting with each other, materials to be computed, and very specific and complex geometrical shapes, it becomes impossible to have an efficient DE.&lt;/p&gt;
+
+&lt;p&gt;On the other hand, when you can derive a DE function from your geometry, you can efficiently compute your scene using raymarching. This makes raymarching the ideal method to render fractals, which is what I ended up doing for idyll.&lt;/p&gt;
+
+&lt;h2 id=&quot;distance-estimating-an-iterative-fractal&quot;&gt;distance estimating an iterative fractal&lt;/h2&gt;
 
 </content>
  </entry>
+ 
  
  
 </feed>

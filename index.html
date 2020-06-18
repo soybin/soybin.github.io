@@ -5,22 +5,25 @@ title: pablo peñarroja millán
 
 <div id="home">
 
-	<h1>things i've explained</h1>
+	<h4>articles</h4>
   <ul class="posts">
     {% for post in site.posts %}
       <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
     {% endfor %}
   </ul>
-	<h1>work i've done</h1>
+	<h4>projects</h4>
 	<ul class="posts">
 		<li><a class="link" href="https://github.com/soybin/idyll">idyll</a> — fractal engine</li>
 		<li><a href="https://github.com/soybin/vaaac">vaaac</a> — very awesome arm angle calculation library</li>
 	</ul>
-  <h1>tools i use</h1>
+  <h4>thoughts</h4>
   <ul class="posts">
-		<li><a href="https://www.archlinux.org/">arch</a> — i couldn't ask for less</li>
+    {% for post in site.thoughts %}
+      <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+		<!---<li><a href="https://www.archlinux.org/">arch</a> — i couldn't ask for less</li>
 		<li><a href="https://github.com/i3/i3">i3</a> — bring them tiles</li>
     <li><a href="https://github.com/vim/vim">vim</a> — quality of life enhancer</li>
-		<li><a href="https://github.com/asciimoo/searx">searx</a> — honest information</li>
+		<li><a href="https://github.com/asciimoo/searx">searx</a> — honest information</li>--->
   </ul>
 </div>

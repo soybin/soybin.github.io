@@ -24,4 +24,13 @@ layout: nil
  </entry>
  {% endfor %}
  
+ {% for post in site.thoughts %}
+ <entry>
+   <title>{{ post.title }}</title>
+	 <link href="https://soybin.github.io{{ post.url }}"/>
+   <updated>{{ post.date | date_to_xmlschema }}</updated>
+	 <id>http://soybin.github.io{{ post.id }}</id>
+   <content type="html">{{ post.content | xml_escape }}</content>
+ </entry>
+ {% endfor %}
 </feed>
