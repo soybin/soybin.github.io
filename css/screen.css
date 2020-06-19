@@ -63,6 +63,14 @@ h4 {
 	font-size: 100%;
 }
 
+h5 {
+	text-align: center;
+	padding-top: 2em;
+	border-top: 1px solid var(--text);
+	color: var(--primary);
+	font-size: 90%;
+}
+
 u {
 	text-decoration: none;
 	padding-bottom: 0.1em;
@@ -193,9 +201,10 @@ ul.posts {
 
   #post pre {
 		margin-top: 1em;
-    border: 2px solid #ddd;
+		margin-bottom: 1em;
+    border: 1px solid var(--text);
     background-color: var(--bg);
-    padding: 0 .4em;
+    padding: 0 0.4em;
   }
 
   #post ul,
