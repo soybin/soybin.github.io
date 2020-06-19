@@ -17,9 +17,9 @@ Today, I'll superficially explain and reflect on the logic behind the rendering 
 * *Scene*: \\(n\\) dimensional space in which the geometry is represented.
 
 ## raymarching
-Raymarching is simply an algorithm used to interpret a scene.
+Raymarching is basically a raycasting-based algorithm used to interpret a scene.
   
-The algorithm itself doesn't compute lighting, shadowing nor reflections on its own, it rather gives you information about whether a ray emitted from a pixel does or doesn't intersects the surface of any geometry in the scene. In other words, it calculates the depth of the scene.
+The algorithm itself doesn't compute lighting, shadowing nor reflections on its own, it rather gives you information about whether a ray emitted from a pixel does or doesn't intersect the surface of any geometry in the scene. In other words, it calculates the depth of the scene.
   
 ### distance estimators
 Imagine that you're working on a 3-dimensional space, *in order to perform raymarching, you need a function that tells you how far away is any given point in space from the closest point to the surface of the geometry*. That's called a __*distance estimator*__, DE from now on.  
@@ -64,7 +64,7 @@ const double MIN_DISTANCE = 1e-4;
  */
 const int MAX_STEP = 64;
  
-double raymarch(vector3 ori, vector3 dir) {
+color raymarch(vector3 ori, vector3 dir) {
 	double tDist = 0.0;
 	int i;
 	for (i = 0; i < MAX_STEP; ++i) {
@@ -77,7 +77,7 @@ double raymarch(vector3 ori, vector3 dir) {
 		// to the distance variable
 		tDist += curDist;
 	}
-	return 1.0 - (double)i / (double)MAX_STEP;
+	return color(1.0 - (double)i / (double)MAX_STEP);
 }
 ```
 
@@ -209,4 +209,11 @@ Now you can see how raymarching and pathtracing can be complementary to each oth
 With raymarching, you can check whether a ray intersects the geometry or not, and where. Then, you can use pathtracing to integrate the global illumination at the point of intersection between the surface of the geometry and the marched ray.  
   
 Pathtracing computes the lighting, but doesn't compute the point of intersection with the geometry. On the other hand, raymarching computes the point of intersection with the geometry, but doesn't compute lighting. This makes the union of these two techniques ideal to render DE functions.  
-##### thank you for reading, and contact me if you have any questions :D
+## the results
+After properly implementing these techniques, and throwing some iterative fractals into the mix, I developed [**_idyll_**](https://github.com/soybin/idyll), a fractal engine that can create beautiful renders like the following:  
+
+![*fractal rendered with idyll using raymarching and path tracing*](/images/idyll/first.png){:width="100%"}
+![*fractal rendered with idyll using raymarching and path tracing*](/images/idyll/second.png){:width="100%"}
+![*fractal rendered with idyll using raymarching and path tracing*](/images/idyll/third.png){:width="100%"}
+
+##### i hope you've at least acquired a basic understanding of what these rendering algorithms are. thank you for reading, and contact me if you have any questions :D
