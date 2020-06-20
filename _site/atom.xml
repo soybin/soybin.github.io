@@ -4,7 +4,7 @@
  <title>pablo peñarroja millán</title>
  <link href="http://soybin.github.io/atom.xml" rel="self"/>
  <link href="http://soybin.github.io/"/>
- <updated>2020-06-20T00:20:01+02:00</updated>
+ <updated>2020-06-20T14:53:57+02:00</updated>
  <id>http://soybin.github.io/</id>
  <author>
    <name>pablo peñarroja millán</name>
@@ -13,15 +13,15 @@
 
  
  <entry>
-   <title>raymarching the geometry & pathtracing the scene</title>
-	 <link href="https://soybin.github.io/articles/2020/04/01/raymarching.html"/>
-   <updated>2020-04-01T00:00:00+02:00</updated>
-	 <id>http://soybin.github.io/articles/2020/04/01/raymarching</id>
+   <title>raymarch the geometry & pathtrace the scene</title>
+	 <link href="https://soybin.github.io/articles/2020/05/22/raymarch-the-geometry-and-pathtrace-the-scene.html"/>
+   <updated>2020-05-22T00:00:00+02:00</updated>
+	 <id>http://soybin.github.io/articles/2020/05/22/raymarch-the-geometry-and-pathtrace-the-scene</id>
    <content type="html">&lt;!---[*fractal rendered with idyll using raymarching and path tracing*](/images/idyll/first.png){:width=&quot;100%&quot;}---&gt;
-&lt;h1 id=&quot;raymarching-the-geometry--pathtracing-the-scene&quot;&gt;raymarching the geometry &amp;amp; pathtracing the scene&lt;/h1&gt;
+&lt;h1 id=&quot;raymarch-the-geometry--pathtrace-the-scene&quot;&gt;raymarch the geometry &amp;amp; pathtrace the scene&lt;/h1&gt;
 
 &lt;h2 id=&quot;preamble&quot;&gt;preamble&lt;/h2&gt;
-&lt;p&gt;Today, I’ll superficially explain and reflect on the logic behind the rendering pipeline that I came up with when developing  &lt;a href=&quot;https://www.youtube.com/watch?v=cFykbtJmg4A&quot;&gt;&lt;strong&gt;&lt;em&gt;idyll&lt;/em&gt;&lt;/strong&gt;&lt;/a&gt;, a fractal engine.&lt;/p&gt;
+&lt;p&gt;Today, I’ll superficially explain and reflect on raymarching and pathtracing; the two main algorithms behind the rendering pipeline that I came up with when developing  &lt;a href=&quot;https://www.youtube.com/watch?v=cFykbtJmg4A&quot;&gt;&lt;strong&gt;&lt;em&gt;idyll&lt;/em&gt;&lt;/strong&gt;&lt;/a&gt;, a fractal engine.&lt;/p&gt;
 
 &lt;h2 id=&quot;definitions&quot;&gt;definitions&lt;/h2&gt;
 &lt;ul&gt;
@@ -80,35 +80,37 @@
 
 &lt;p&gt;This process should be computed for each pixel on the screen, and it’ll provide an accurate interpretation of the model, no matter how complex the distance estimator may be.&lt;/p&gt;
 
-&lt;p&gt;The simplest c++ style code would look something like the following:&lt;/p&gt;
+&lt;p&gt;The pseudocode for the simplest version of this algorithm would look something like the following:&lt;/p&gt;
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;// distance threshold
-const double MIN_DISTANCE = 1e-4;
+const double MIN_DISTANCE = 1e-4
 
 /*
  * the maximum number of steps allowed. 
  * if this amount of steps, 'raymarch'
  * will return 0.0
  */
-const int MAX_STEP = 64;
+const int MAX_STEP = 64
  
 color raymarch(vector3 ori, vector3 dir) {
-	double tDist = 0.0;
-	int i;
+	double tDist = 0.0
+	int i
 	for (i = 0; i &amp;lt; MAX_STEP; ++i) {
-		double curDist = sphereDE(ori + dir * tDist);
+		double curDist = sphereDE(ori + dir * tDist)
 		// in case the threshold is reached
 		if (curDist &amp;lt; MIN_DISTANCE) {
-			break;
+			break
 		}
 		// else, add the marched distance
 		// to the distance variable
-		tDist += curDist;
+		tDist += curDist
 	}
-	return color(1.0 - (double)i / (double)MAX_STEP);
+	return color(1.0 - (double)i / (double)MAX_STEP)
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;This is a very simple implementation, and if you were to use the returned value from this function as the value for the three color channels of each pixel, you would get a black and white image with some very obvious banding artifacts (since we’re deriving the return value from two integers).&lt;/p&gt;
+
+&lt;p&gt;There’s also a lot of things I’ve left out of this explanation because they’re beyond the scope of this article, such as primitive shapes transformation and combination (somewhat similar to intersection boolean operations), spatial transforms, and even &lt;a href=&quot;https://www.youtube.com/watch?v=zy1l1SLJDo4&quot;&gt;infinite repetition&lt;/a&gt;, among many others. Minimally modifying the DE for your geometry will dramatically alter the end result of the geometry.&lt;/p&gt;
 
 &lt;h3 id=&quot;ray-direction&quot;&gt;ray direction&lt;/h3&gt;
 &lt;p&gt;I’ve skipped over this until now, because it’s not vital to conceptually understanding raymarching. However, it is a very important implementation detail in most cases. The following, is an example of a formula for calculating the direction that each pixel’s ray \(rayDirection(P_x, P_y)\) should follow, given a desired field of view \(fov\) in radians:&lt;/p&gt;
@@ -146,15 +148,15 @@ const int SAMPLES = 256
 const double BOUNCES = 8;
 
 // probability of ray reflection
-const double PROB = 1/PI;
+const double PROB = 1/PI
 
 // pathtracing recursively
 color pathtrace (ray r, int bounces) {
 	// in the ray missed
-	if (!r.hit) return color(0.0);
+	if (!r.hit) return color(0.0)
 
 	// in case we reached max number of bounces
-	if (bounces == BOUNCES) return color(0.0);
+	if (bounces == BOUNCES) return color(0.0)
 
 	// get ray normal
 	vector3 rayNormal = calculateNormal(r.origin, r.direction)
@@ -171,17 +173,17 @@ color pathtrace (ray r, int bounces) {
 
 	// bidirectional reflectance distribution function
 	double ct = dot(newDir, rayNormal)
-	color brdf = r.hitReflectance / PI;
+	color brdf = r.hitReflectance / PI
 
 	ray newRay = {newOrigin, newDir}
 
-	color nextBounce = pathtrace(newRay, bounces + 1);
+	color nextBounce = pathtrace(newRay, bounces + 1)
 
 	// this is where the integration of
 	// the lighting along the different
 	// intersection points of the ray
 	// happens
-	return color + (brdf * nextBounce * ct / PROB);
+	return color + (brdf * nextBounce * ct / PROB)
 }
 
 // iterate through every pixel in the screen
@@ -194,11 +196,11 @@ for (y in height) {
 		color totalColor = {0.0, 0.0, 0.0}
 		// iterate for every sample and add to color
 		for (sample in SAMPLES) {
-			totalColor += pathtrace(origin, direction, 0);
+			totalColor += pathtrace(origin, direction, 0)
 		}
 	}
-	color /= samples;
-	pixels[y][x] = color;
+	color /= samples
+	pixels[y][x] = color
 }
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;What’s happening here is the following:&lt;/p&gt;
@@ -237,14 +239,14 @@ You could argue which one looks better, but at the end of the day, that’s subj
 With raymarching, you can check whether a ray intersects the geometry or not, and where. Then, you can use pathtracing to integrate the global illumination at the point of intersection between the surface of the geometry and the marched ray.&lt;/p&gt;
 
 &lt;p&gt;Pathtracing computes the lighting, but doesn’t compute the point of intersection with the geometry. On the other hand, raymarching computes the point of intersection with the geometry, but doesn’t compute lighting. This makes the union of these two techniques ideal to render DE functions.&lt;/p&gt;
-&lt;h2 id=&quot;the-results&quot;&gt;the results&lt;/h2&gt;
+&lt;h2 id=&quot;results&quot;&gt;results&lt;/h2&gt;
 &lt;p&gt;After properly implementing these techniques, and throwing some iterative fractals into the mix, I developed &lt;a href=&quot;https://github.com/soybin/idyll&quot;&gt;&lt;strong&gt;&lt;em&gt;idyll&lt;/em&gt;&lt;/strong&gt;&lt;/a&gt;, a fractal engine that can create beautiful renders like the following:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/idyll/first.png&quot; alt=&quot;*fractal rendered with idyll using raymarching and path tracing*&quot; width=&quot;100%&quot; /&gt;
 &lt;img src=&quot;/images/idyll/second.png&quot; alt=&quot;*fractal rendered with idyll using raymarching and path tracing*&quot; width=&quot;100%&quot; /&gt;
 &lt;img src=&quot;/images/idyll/third.png&quot; alt=&quot;*fractal rendered with idyll using raymarching and path tracing*&quot; width=&quot;100%&quot; /&gt;&lt;/p&gt;
 
-&lt;h5 id=&quot;i-hope-youve-at-least-acquired-a-basic-understanding-of-what-these-rendering-algorithms-are-thank-you-for-reading-and-contact-me-if-you-have-any-questions-d&quot;&gt;i hope you’ve at least acquired a basic understanding of what these rendering algorithms are. thank you for reading, and contact me if you have any questions :D&lt;/h5&gt;
+&lt;h5 id=&quot;thank-you-for-reading&quot;&gt;thank you for reading&lt;/h5&gt;
 </content>
  </entry>
  

@@ -1,11 +1,11 @@
 /* define color palette */
-/* https://coolors.co/092b34-def5f7-f6a2aa-f78d99-f67984 */
+/* https://coolors.co/212d30-ddf8ef-aecdcd-7ea2aa-51727b */
 :root {
-	--primary: #FCD9DC;
-	--text: #EFFAFB;
-	--bg: #061C23;
-	--titles: #F9B4B9;
-	--hover: #39A2AE;
+	--primary: #AECDCD;
+	--text: #DDF8EF;
+	--bg: #212D30;
+	--titles: #7EA2AA;
+	--hover: #51727B;
 }
 
 /*****************************************************************************/
@@ -38,11 +38,12 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
 	text-align: center;
+	color: var(--titles);
 	margin-top: 1em;
 	margin-bottom: 1em;
-	padding-bottom: 2em;
-	border-bottom: 1px solid var(--text);
-	font-size: 110%;
+	padding-bottom: 1em;
+	border-bottom: 1px dashed var(--text);
+	font-size: 100%;
 }
 
 h2 {
@@ -65,16 +66,17 @@ h4 {
 
 h5 {
 	text-align: center;
-	padding-top: 2em;
-	border-top: 1px solid var(--text);
-	color: var(--primary);
-	font-size: 90%;
+	margin-top: 2em;
+	padding-top: 1em;
+	border-top: 1px dashed var(--text);
+	color: var(--titles);
+	font-size: 100%;
 }
 
 u {
 	text-decoration: none;
 	padding-bottom: 0.1em;
-	border-bottom: 1px solid var(--primary);
+	border-bottom: 1px solid var(--text);
 }
 
 u:hover {
@@ -87,7 +89,7 @@ p {
 
 a {
 	text-decoration: none;	
-  color: var(--primary);
+  color: var(--text);
 	font-size: 100%;
 }
 
@@ -105,6 +107,12 @@ table {
 /* Home
 /*
 /*****************************************************************************/
+
+ul.description {
+	text-align: left;
+	color: var(--text);
+	margin-bottom: 2em;
+}
 
 ul.posts {
   list-style-type: none;
