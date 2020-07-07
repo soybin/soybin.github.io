@@ -217,5 +217,3 @@ After properly implementing these techniques, and throwing some iterative fracta
 ![*fractal rendered with idyll using raymarching and path tracing*](/images/idyll/first.png){:width="100%"}
 ![*fractal rendered with idyll using raymarching and path tracing*](/images/idyll/second.png){:width="100%"}
 ![*fractal rendered with idyll using raymarching and path tracing*](/images/idyll/third.png){:width="100%"}
-  
-##### thank you for reading

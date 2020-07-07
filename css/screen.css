@@ -28,7 +28,7 @@ html, body {
 body {
   background-color: var(--bg);
   font: 18px Monaco, monospace, Courier;
-  text-align: center;
+  text-align: left;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -37,40 +37,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-	text-align: center;
+	text-align: left;
 	color: var(--titles);
 	margin-top: 1em;
 	margin-bottom: 1em;
 	padding-bottom: 1em;
 	border-bottom: 1px dashed var(--text);
-	font-size: 100%;
 }
 
 h2 {
-	text-align: center;
+	text-align: left;
 	padding: 1em 0em;
 	border-bottom: 1px solid var(--text);
 	margin-bottom: 1em;
-	font-size: 100%;
-}
-
-h3 {
-	text-align: left;
-	font-size: 100%;
-}
-
-h4 {
-	margin-bottom: 0em;
-	font-size: 100%;
-}
-
-h5 {
-	text-align: center;
-	margin-top: 2em;
-	padding-top: 1em;
-	border-top: 1px dashed var(--text);
-	color: var(--titles);
-	font-size: 100%;
 }
 
 u {
@@ -90,7 +69,6 @@ p {
 a {
 	text-decoration: none;	
   color: var(--text);
-	font-size: 100%;
 }
 
 a:hover {
@@ -98,8 +76,6 @@ a:hover {
 }
 
 table {
-  font-size: inherit;
-  font: 100%;
 }
 
 /*****************************************************************************/
@@ -110,6 +86,7 @@ table {
 
 ul.description {
 	text-align: left;
+
 	color: var(--text);
 	margin-bottom: 2em;
 }
@@ -127,7 +104,6 @@ ul.posts {
   ul.posts span {
     font-family: monospace, Courier;
 		font-style: italic;
-    font-size: 90%;
   }
 
 /*****************************************************************************/
@@ -137,7 +113,6 @@ ul.posts {
 /*****************************************************************************/
 
 .site {
-  font-size: 100%;
   text-align: justify;
   width: 40em;
   margin: 3em auto 2em auto;
@@ -183,7 +158,6 @@ ul.posts {
   }
 
   .site .footer {
-    font-size: 90%;
     color: var(--primary);
     border-top: 1px solid var(--text);
     margin-top: 2em;
@@ -213,6 +187,7 @@ ul.posts {
     border: 1px solid var(--text);
     background-color: var(--bg);
     padding: 0 0.4em;
+	white-space: pre-wrap; // preserve whitespace, the text is wrapped
   }
 
   #post ul,
@@ -221,10 +196,7 @@ ul.posts {
   }
 
   #post code {
-    border: 2px solid #ddd;
     background-color: var(--bg);
-    font-size: 90%;
-    padding: 0 .2em;
   }
 
     #post pre code {

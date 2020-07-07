@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
  
  <title>pablo peñarroja millán</title>
- <link href="http://soybin.github.io/atom.xml" rel="self"/>
- <link href="http://soybin.github.io/"/>
- <updated>2020-06-20T14:53:57+02:00</updated>
- <id>http://soybin.github.io/</id>
+ <link href="https://soybin.github.io/atom.xml" rel="self"/>
+ <link href="https://soybin.github.io/"/>
+ <updated>2020-06-20T19:44:08+02:00</updated>
+ <id>https://soybin.github.io/</id>
  <author>
    <name>pablo peñarroja millán</name>
    <email>soybinary@gmail.com</email>
@@ -13,10 +13,32 @@
 
  
  <entry>
+   <title>using computer vision to virtualize motion</title>
+	 <link href="https://soybin.github.io/articles/2020/06/20/using-computer-vision-to-virtualize-motion.html"/>
+   <updated>2020-06-20T00:00:00+02:00</updated>
+	 <id>https://soybin.github.io/articles/2020/06/20/using-computer-vision-to-virtualize-motion</id>
+   <content type="html">&lt;h1 id=&quot;using-computer-vision-to-virtualize-motion&quot;&gt;using computer vision to virtualize motion&lt;/h1&gt;
+
+&lt;h2 id=&quot;preamble&quot;&gt;preamble&lt;/h2&gt;
+
+&lt;h2 id=&quot;definitions&quot;&gt;definitions&lt;/h2&gt;
+
+&lt;h2 id=&quot;results&quot;&gt;results&lt;/h2&gt;
+&lt;p&gt;After properly implementing these techniques, and throwing some iterative fractals into the mix, I developed &lt;a href=&quot;https://github.com/soybin/idyll&quot;&gt;&lt;strong&gt;&lt;em&gt;idyll&lt;/em&gt;&lt;/strong&gt;&lt;/a&gt;, a fractal engine that can create beautiful renders like the following:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/idyll/first.png&quot; alt=&quot;*fractal rendered with idyll using raymarching and path tracing*&quot; width=&quot;100%&quot; /&gt;
+&lt;img src=&quot;/images/idyll/second.png&quot; alt=&quot;*fractal rendered with idyll using raymarching and path tracing*&quot; width=&quot;100%&quot; /&gt;
+&lt;img src=&quot;/images/idyll/third.png&quot; alt=&quot;*fractal rendered with idyll using raymarching and path tracing*&quot; width=&quot;100%&quot; /&gt;&lt;/p&gt;
+
+&lt;h5 id=&quot;thank-you-for-reading&quot;&gt;thank you for reading&lt;/h5&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>raymarch the geometry & pathtrace the scene</title>
 	 <link href="https://soybin.github.io/articles/2020/05/22/raymarch-the-geometry-and-pathtrace-the-scene.html"/>
    <updated>2020-05-22T00:00:00+02:00</updated>
-	 <id>http://soybin.github.io/articles/2020/05/22/raymarch-the-geometry-and-pathtrace-the-scene</id>
+	 <id>https://soybin.github.io/articles/2020/05/22/raymarch-the-geometry-and-pathtrace-the-scene</id>
    <content type="html">&lt;!---[*fractal rendered with idyll using raymarching and path tracing*](/images/idyll/first.png){:width=&quot;100%&quot;}---&gt;
 &lt;h1 id=&quot;raymarch-the-geometry--pathtrace-the-scene&quot;&gt;raymarch the geometry &amp;amp; pathtrace the scene&lt;/h1&gt;
 
@@ -245,8 +267,6 @@ With raymarching, you can check whether a ray intersects the geometry or not, an
 &lt;p&gt;&lt;img src=&quot;/images/idyll/first.png&quot; alt=&quot;*fractal rendered with idyll using raymarching and path tracing*&quot; width=&quot;100%&quot; /&gt;
 &lt;img src=&quot;/images/idyll/second.png&quot; alt=&quot;*fractal rendered with idyll using raymarching and path tracing*&quot; width=&quot;100%&quot; /&gt;
 &lt;img src=&quot;/images/idyll/third.png&quot; alt=&quot;*fractal rendered with idyll using raymarching and path tracing*&quot; width=&quot;100%&quot; /&gt;&lt;/p&gt;
-
-&lt;h5 id=&quot;thank-you-for-reading&quot;&gt;thank you for reading&lt;/h5&gt;
 </content>
  </entry>
  
@@ -256,7 +276,7 @@ With raymarching, you can check whether a ray intersects the geometry or not, an
    <title>on open source</title>
 	 <link href="https://soybin.github.io/thoughts/2020/06/15/on-open-source.html"/>
    <updated>2020-06-15T00:00:00+02:00</updated>
-	 <id>http://soybin.github.io/thoughts/2020/06/15/on-open-source</id>
+	 <id>https://soybin.github.io/thoughts/2020/06/15/on-open-source</id>
    <content type="html">&lt;p&gt;it is very cool indeed&lt;/p&gt;
 
 </content>
