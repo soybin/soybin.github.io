@@ -31,7 +31,72 @@ Finding the user's skin tone is crucial to carrying out the next steps of the pr
 One smart solution to finding the user's skin tone can be to use a Haar Cascade in order to find the face of the user, take a sample of the forehead, and apply a threshold. The reson I didn't end up using this option for vaaac is because Haar cascade files tend to be pretty big, and I wanted to write a library as lightweight as possible.
   
 What I did instead is quite simple and intuitive, although it requires a bit of work from the user. I asked the user to fill a portion of the screen with a sample of their arm's skin, and to press any button whenever the requirement was met. The program then takes a copy of the pixel matrix within the screen portion area bounds and computes the average color. As seen in the following gif:  
-<img src="../../../../gifs/vaaac01.gif" width="50%"/>
+  
+<img src="../../../../gifs/vaaac01.gif" width="50%"/>  
+  
+This is the function used in vaaac to obtain the user's skin tone:
+```
+void calibrateSkinTone() {
+	if (ok & 1) {
+		int xCoord = res / 2 - SAMPLE_AREA_WIDTH / 2;
+		int yCoord = res / 2 - SAMPLE_AREA_HEIGHT / 2;
+		int rectSizeX = std::min(SAMPLE_AREA_WIDTH, halfRes);
+		int rectSizeY = std::min(SAMPLE_AREA_HEIGHT, halfRes);
+		cv::Rect area(xCoord, yCoord, rectSizeX, rectSizeY);
+		for (;;) {
+			videoCapture >> frame;
+			frame = frame(frameBounds);
+			if (RENDER_SAMPLE_TEXT) {
+				cv::putText(
+						frame,
+						"fill the area with your skin.",
+						cv::Point(10, area.y - 60),
+						cv::FONT_HERSHEY_DUPLEX,
+						1.0,
+						cv::Scalar(255, 255, 255),
+						1);
+				cv::putText(
+						frame,
+						"then press any key.",
+						cv::Point(10, area.y - 20),
+						cv::FONT_HERSHEY_DUPLEX,
+						1.0,
+						cv::Scalar(255, 255, 255),
+						1);
+			}
+			/*
+			 * check if user is done before
+			 * drawing rectangle because,
+			 * otherwise, the rectangle gets
+			 * computed as the skin tone mean
+			 */
+			int key = cv::waitKey(1);
+			if (key != -1) {
+				break;
+			}
+			// now draw rectangle and draw
+			if (RENDER_TO_WINDOW) {
+				cv::rectangle(frame, area, cv::Scalar(255, 255, 255), 2);
+				cv::imshow("calibrateSkinTone", frame);
+			}
+		}
+		if (RENDER_TO_WINDOW) {
+			cv::destroyWindow("calibrateSkinTone");
+		}
+		cv::Mat hsv;
+		cv::cvtColor(frame, hsv, cv::COLOR_BGR2HSV);
+		cv::Mat sample(hsv, area);
+		cv::Scalar mean = cv::mean(sample);
+		hLow = mean[0] - MASK_LOW_TOLERANCE;
+		hHigh = mean[0] + MASK_HIGH_TOLERANCE;
+		sLow = mean[1] - MASK_LOW_TOLERANCE;
+		sHigh = mean[1] + MASK_HIGH_TOLERANCE;
+		vLow = 0;
+		vHigh = 255;
+		ok = 2;
+	}
+}
+```
 
 ## binarization of the image
 After finding the user's color skin, the next step is to binarize the image. That means making every pixel of the image either black (if it's not the user's skin) or white (if it's the user's skin).  

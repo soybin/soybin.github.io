@@ -4,7 +4,7 @@
  <title>pablo peñarroja millán</title>
  <link href="https://soybin.github.io/atom.xml" rel="self"/>
  <link href="https://soybin.github.io/"/>
- <updated>2020-07-13T16:16:34+02:00</updated>
+ <updated>2020-07-13T16:27:35+02:00</updated>
  <id>https://soybin.github.io/</id>
  <author>
    <name>pablo peñarroja millán</name>
@@ -44,8 +44,72 @@ I first wrote the library, and then I wrote &lt;a href=&quot;https://github.com/
 
 &lt;p&gt;One smart solution to finding the user’s skin tone can be to use a Haar Cascade in order to find the face of the user, take a sample of the forehead, and apply a threshold. The reson I didn’t end up using this option for vaaac is because Haar cascade files tend to be pretty big, and I wanted to write a library as lightweight as possible.&lt;/p&gt;
 
-&lt;p&gt;What I did instead is quite simple and intuitive, although it requires a bit of work from the user. I asked the user to fill a portion of the screen with a sample of their arm’s skin, and to press any button whenever the requirement was met. The program then takes a copy of the pixel matrix within the screen portion area bounds and computes the average color. As seen in the following gif:&lt;br /&gt;
-&lt;img src=&quot;../../../../gifs/vaaac01.gif&quot; width=&quot;50%&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;What I did instead is quite simple and intuitive, although it requires a bit of work from the user. I asked the user to fill a portion of the screen with a sample of their arm’s skin, and to press any button whenever the requirement was met. The program then takes a copy of the pixel matrix within the screen portion area bounds and computes the average color. As seen in the following gif:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../../gifs/vaaac01.gif&quot; width=&quot;50%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This is the function used in vaaac to obtain the user’s skin tone:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void calibrateSkinTone() {
+	if (ok &amp;amp; 1) {
+		int xCoord = res / 2 - SAMPLE_AREA_WIDTH / 2;
+		int yCoord = res / 2 - SAMPLE_AREA_HEIGHT / 2;
+		int rectSizeX = std::min(SAMPLE_AREA_WIDTH, halfRes);
+		int rectSizeY = std::min(SAMPLE_AREA_HEIGHT, halfRes);
+		cv::Rect area(xCoord, yCoord, rectSizeX, rectSizeY);
+		for (;;) {
+			videoCapture &amp;gt;&amp;gt; frame;
+			frame = frame(frameBounds);
+			if (RENDER_SAMPLE_TEXT) {
+				cv::putText(
+						frame,
+						&quot;fill the area with your skin.&quot;,
+						cv::Point(10, area.y - 60),
+						cv::FONT_HERSHEY_DUPLEX,
+						1.0,
+						cv::Scalar(255, 255, 255),
+						1);
+				cv::putText(
+						frame,
+						&quot;then press any key.&quot;,
+						cv::Point(10, area.y - 20),
+						cv::FONT_HERSHEY_DUPLEX,
+						1.0,
+						cv::Scalar(255, 255, 255),
+						1);
+			}
+			/*
+			 * check if user is done before
+			 * drawing rectangle because,
+			 * otherwise, the rectangle gets
+			 * computed as the skin tone mean
+			 */
+			int key = cv::waitKey(1);
+			if (key != -1) {
+				break;
+			}
+			// now draw rectangle and draw
+			if (RENDER_TO_WINDOW) {
+				cv::rectangle(frame, area, cv::Scalar(255, 255, 255), 2);
+				cv::imshow(&quot;calibrateSkinTone&quot;, frame);
+			}
+		}
+		if (RENDER_TO_WINDOW) {
+			cv::destroyWindow(&quot;calibrateSkinTone&quot;);
+		}
+		cv::Mat hsv;
+		cv::cvtColor(frame, hsv, cv::COLOR_BGR2HSV);
+		cv::Mat sample(hsv, area);
+		cv::Scalar mean = cv::mean(sample);
+		hLow = mean[0] - MASK_LOW_TOLERANCE;
+		hHigh = mean[0] + MASK_HIGH_TOLERANCE;
+		sLow = mean[1] - MASK_LOW_TOLERANCE;
+		sHigh = mean[1] + MASK_HIGH_TOLERANCE;
+		vLow = 0;
+		vHigh = 255;
+		ok = 2;
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;binarization-of-the-image&quot;&gt;binarization of the image&lt;/h2&gt;
 &lt;p&gt;After finding the user’s color skin, the next step is to binarize the image. That means making every pixel of the image either black (if it’s not the user’s skin) or white (if it’s the user’s skin).&lt;br /&gt;
