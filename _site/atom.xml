@@ -4,7 +4,7 @@
  <title>pablo peñarroja millán</title>
  <link href="https://soybin.github.io/atom.xml" rel="self"/>
  <link href="https://soybin.github.io/"/>
- <updated>2020-12-16T23:32:04+01:00</updated>
+ <updated>2020-12-16T23:40:21+01:00</updated>
  <id>https://soybin.github.io/</id>
  <author>
    <name>pablo peñarroja millán</name>
@@ -13,11 +13,11 @@
 
  
  <entry>
-   <title>building clouds from randomness</title>
-	 <link href="https://soybin.github.io/articles/2020/11/22/create-clouds-from-randomness.html"/>
-   <updated>2020-11-22T00:00:00+01:00</updated>
-	 <id>https://soybin.github.io/articles/2020/11/22/create-clouds-from-randomness</id>
-   <content type="html">&lt;h1 id=&quot;building-clouds-from-randomness&quot;&gt;building clouds from randomness&lt;/h1&gt;
+   <title>compute clouds from randomness</title>
+	 <link href="https://soybin.github.io/articles/2020/12/16/compute-clouds-from-randomness.html"/>
+   <updated>2020-12-16T00:00:00+01:00</updated>
+	 <id>https://soybin.github.io/articles/2020/12/16/compute-clouds-from-randomness</id>
+   <content type="html">&lt;h1 id=&quot;compute-clouds-from-randomness&quot;&gt;compute clouds from randomness&lt;/h1&gt;
 
 &lt;p&gt;&lt;img src=&quot;../../../../images/ao_main_image.png&quot; width=&quot;100%&quot; /&gt;&lt;br /&gt;
 &lt;em&gt;rendered with &lt;a href=&quot;https://github.com/soybin/ao&quot;&gt;ao「青」&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;

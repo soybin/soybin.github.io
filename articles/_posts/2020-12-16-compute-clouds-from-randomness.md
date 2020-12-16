@@ -1,6 +1,6 @@
 ---
 layout: post
-title: building clouds from randomness
+title: compute clouds from randomness
 ---
 
 # {{ page.title }}  
