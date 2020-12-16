@@ -71,6 +71,10 @@ a {
   color: var(--text);
 }
 
+a:link, a:visited {
+	color: var(--primary);
+}
+
 a:hover {
   color: var(--hover);
 }
@@ -86,7 +90,6 @@ table {
 
 ul.description {
 	text-align: left;
-
 	color: var(--text);
 	margin-bottom: 2em;
 }
@@ -179,6 +182,10 @@ ul.posts {
 	color: var(--text);
 }
 
+#post:link {
+	color: var(--bg);
+}
+
   /* standard */
 
   #post pre {
@@ -187,7 +194,7 @@ ul.posts {
     border: 1px solid var(--text);
     background-color: var(--bg);
     padding: 0 0.4em;
-	white-space: pre-wrap; // preserve whitespace, the text is wrapped
+		white-space: pre-wrap; // preserve whitespace, the text is wrapped
   }
 
   #post ul,

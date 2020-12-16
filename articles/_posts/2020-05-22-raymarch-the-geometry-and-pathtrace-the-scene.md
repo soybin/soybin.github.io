@@ -190,27 +190,22 @@ With a high enough value for the samples and bounces variable, you can get very 
 
 If you're reading this, chances are you've heard of raytracing, and it's no coincidence raytracing, raymarching and pathtracing sound familiar.  
   
-All three of these PBR (physically based rendering) algorithms have something in common: *__they all use raycasting to understand a scene's geometry__*, but what each one of this algorithms accomplishes, and the way they operate is different from one another.  
-  
-**_You can think of raytracing as a complete method that calculates both the point of intersection and the behaviour of the ray after the intersection. Whereas raymarching only computes the point of intersection, and pathtracing only computes the behaviour of the ray after the intersection._**  
+All three of these PBR (physically based rendering) algorithms have something in common: *__they all use raycasting to understand a scene's geometry__*, but what each one of this algorithms accomplishes, and the way they operate is different from one another. It's also true that most researchers have slightly different understandings of these concepts, since the lines separating them are often blurry.
+I'll try to shed some light regarding the differences between these techniques based on my own experience and understanding.
 
-Even though you might think that raytracing is the union of raymarching and pathtracing, that's not the case, because the way they carry out both calculating the point intersection and the behaviour of the ray afterwards, greatly differs from one another.
-  
 ### raymarching and raytracing
-The most notorious difference between raymarching and raytracing is the following:  
-In raymarching, the intersection with the scene's geomtry is computed using a distance estimator, as we've recently seen. While as in raytracing, the intersection is analitically computed, and you don't require a DE. This makes raytracing more suitable for games, although it's still a very expensive technique.
+In raymarching, the intersection with the scene's geometry is computed using a distance estimator, as we've recently seen. On the other hand, raytracing computes the intersection analitically, not requiring a DE. Coming up with a DE for a fractal or any mathematical model can be easy, but when you have many objects with different shapes, raymarching grows exponentially in price. This makes raytracing―although still pretty expensive―more suitable for games, and it's also the reason why raytracing isn't, and probably won't be, the mainstream rendering technique.  
+That being said, raymarching is awesome; as I mentioned earlier, when used properly, it can deliver unprecedented performance on very specific applications, and its simplicity makes it very straightforward to understand, implement, and maintain.  
 
 ### pathtracing and raytracing
- The goal of pathtracing is achieving a similar result to the original raytracing technique but with less computation.
-Pathtracing and raytracing both are physically based rendering (PBR) techniques, both are expensive, and both represent reality with very high fidelity.  
-Both techniques are fundamentally similar, but their biggest difference is how a ray bounce is determined.
-You could argue which one looks better, but at the end of the day, that's subjective. 
+Pathtracing is a physically based rendering (PBR) technique that relies on the monte carlo method. It integrates the amount of light arriving to a specific point in a surface of an object in the scene by averaging out different paths that the ray could take when bouncing off that surface. That's the overall idea, but whether that point be the camera lenses or an object's surface depends on the specific implementation.  
+In the case of **_idyll_**, each point of intersection from a camera ray intersecting the geometry is pathtraced to compute the amount of light arriving to that point; a combination of pathtracing and raytring.  
 
 ## union of raymarching and pathtracing
 Now you can see how raymarching and pathtracing can be complementary to each other, making for a solid rendering pipeline:  
-With raymarching, you can check whether a ray intersects the geometry or not, and where. Then, you can use pathtracing to integrate the global illumination at the point of intersection between the surface of the geometry and the marched ray.  
-  
-Pathtracing computes the lighting, but doesn't compute the point of intersection with the geometry. On the other hand, raymarching computes the point of intersection with the geometry, but doesn't compute lighting. This makes the union of these two techniques ideal to render DE functions.  
+With raymarching, you can check whether a ray intersects the geometry and where. Then, you can use pathtracing to integrate the global illumination arriving at the point of intersection between the surface of the geometry and the marched ray.  
+   
+In *__idyll__*, pathtracing computes the global lighting, but doesn't compute the point of intersection with the geometry. On the other hand, raymarching computes the point of intersection with the geometry, but doesn't compute lighting. This is an oversimplification, as the actual relation between the two techniques is a bit more entangled, but you get the overall picture.
 ## results
 After properly implementing these techniques, and throwing some iterative fractals into the mix, I developed [**_idyll_**](https://github.com/soybin/idyll), a fractal engine that can create beautiful renders like the following:  
 
