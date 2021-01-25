@@ -17,16 +17,16 @@ Today, I'll superficially explain and reflect on raymarching and pathtracing; th
 * *Scene*: \\(n\\) dimensional space in which the geometry is represented.
 
 ## raymarching
-Raymarching is basically a raycasting-based algorithm used to interpret a scene.
+Raymarching is a raycasting-based algorithm used to interpret a scene.
   
-The algorithm itself doesn't compute lighting, shadowing nor reflections on its own, it rather gives you information about whether a ray emitted from a pixel does or doesn't intersect the surface of any geometry in the scene. In other words, it calculates the depth of the scene.
+The algorithm itself doesn't compute lighting, shadowing nor reflections on its own; it merely provides information about whether a ray emitted from a pixel does or doesn't intersect the surface of the geometry in the scene. In other words, it computes how far away the geometry is from a view matrix. However, with this information and some slight modifications, one can calculate all sorts of interesting stuff, such as ambient occlusion, the normal vector of a point in the geometry's surface, or shadowing.
   
 ### distance estimators
-Imagine that you're working on a 3-dimensional space, *in order to perform raymarching, you need a function that tells you how far away is any given point in space from the closest point to the surface of the geometry*. That's called a __*distance estimator*__, DE from now on.  
+Assume that we're working in 3-dimensional space; *in order to perform raymarching, we need a function that tells us how far away is any given point in space from the closest point to the surface of the geometry*. That's called a __*distance estimator*__—DE from now on.  
 
-The most basic DE functions represent primitive objects, and [**_this_**](https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm) is a fantastic resource by Íñigo Quílez on them.  
+The most basic DE functions represent primitive objects. [**_This_**](https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm) is a fantastic article by Íñigo Quílez on them.  
   
-For example, here you can see the DE function for a sphere \\(sphereDE\\), where \\(P\\) is the point in space that you're calculating how far apart from the sphere it is, and \\(S\\) is the scale of the sphere (assuming the sphere is located at the origin of coordinates):
+For example, here one can see the DE function for a sphere \\(sphereDE\\), where \\(P\\) is the point in space that you're calculating how far apart from the sphere it is, and \\(S\\) is the scale of the sphere (assuming the sphere is located at the origin of coordinates):
 
 \\[ sphereDE(P, S) = length(P) - S\\]
 ```
@@ -36,21 +36,21 @@ double sphereDE(vector3 P, double S) {
 ```
 ### what to do with a DE
 
-**_Once you know how far away from something you are, you know you can safely move that distance in any direction, without having to worry about hitting that object._**  
+**_Once you know how far away from something you are, you know you can safely move that distance in any direction, without having to worry about prematurely intersecting the geometry._**  
   
-* Let a camera be placed anywhere in your scene with a distance of 10 meters from the origin of coordinates (0, 0, 0), and looking towards it.  
+* Let a camera be placed anywhere in the scene with a distance of 10 meters from the origin of coordinates (0, 0, 0) and be looking toward it.  
   
-* Let a ray have its origin (ori) at the position of the camera in your scene, and give it a direction (dir) towards the center of coordinates.  
+* Let a ray have its origin (ori) at the position of the camera in the scene, and give it a direction as a normalized vector (dir), which should be obtained from the view matrix.  
   
-* Let a variable total distance (tDist) represent how far away has the ray moved from its origin, and it'll be initialized to zero.  
+* Let the variable (tDist) represent how far away has the ray moved from its origin. Initialize it to zero.  
   
-* Now, calculate the DE from the point O + D * D' (the origin of the ray plus the direction of the ray times the distance the ray moved).  
+* Now, calculate the DE from the point ori (the origin of the ray).  
   
-* Then you can safely *__march__* the ray by the distance returned by the DE function, which means you can add DE(O + D * D') to D.  
+* It is safe to *__march__* the ray by the distance returned by the DE function; add DE(ori) to tDist, and use the expression DE(ori + dir * tDist) from now on.
   
-* Repeat this process until DE(ori + dir * tDist) returns a value smaller than a certain arbitrary threshold (1e-4 for example), which means that the ray is close enough to the surface of the geometry for it to be considered an intersection. Obviously the ray won't get to hit the geometry itself because of Zeno's paradox, so it's an estimation, hence the name distance estimator.
+* Repeat this process by computing the DE for ori + dir * tDist until it returns a value smaller than a certain arbitrary threshold (1e-4, for instance), meaning that the ray is close enough to the surface of the geometry for it to be considered an intersection. Obviously, the ray won't get to hit the geometry itself because of Zeno's paradox; it's an arbitrarily accurate estimation, hence the name distance estimator.
 
-This process should be computed for each pixel on the screen, and it'll provide an accurate interpretation of the model, no matter how complex the distance estimator may be.
+This process should be computed for each pixel on the screen, and it'll provide an accurate interpretation of the geometry, no matter how complex it may be.
 
 The pseudocode for the simplest version of this algorithm would look something like the following:
 ```
@@ -83,34 +83,34 @@ color raymarch(vector3 ori, vector3 dir) {
 
 This is a very simple implementation, and if you were to use the returned value from this function as the value for the three color channels of each pixel, you would get a black and white image with some very obvious banding artifacts (since we're deriving the return value from two integers).  
   
-There's also a lot of things I've left out of this explanation because they're beyond the scope of this article, such as primitive shapes transformation and combination (somewhat similar to intersection boolean operations), spatial transforms, and even [infinite repetition](https://www.youtube.com/watch?v=zy1l1SLJDo4), among many others. Minimally modifying the DE for your geometry will dramatically alter the end result of the geometry.
+There's a lot of things regarding DEs I've left out of this explanation because they're beyond the scope of this article, such as primitive shapes transformation and combination (somewhat similar to intersection boolean operations), spatial transforms, and, my favorite, [modular repetition](https://www.youtube.com/watch?v=zy1l1SLJDo4), among many others. Slightly modifying the DE for your geometry will dramatically alter its end result.
 
 ### ray direction
-I've skipped over this until now, because it's not vital to conceptually understanding raymarching. However, it is a very important implementation detail in most cases. The following, is an example of a formula for calculating the direction that each pixel's ray \\(rayDirection(P_x, P_y)\\) should follow, given a desired field of view \\(fov\\) in radians:  
+The following is not vital to understand raymarching; however, it is a basic implementation detail. To calculate a pixel's ray direction given a screen resolution \\(width\\) and \\(height\\) and a desired field of view \\(fov\\), I use the following expression:  
   
-Let the constant \\(P_x\\) be equal to the pixel x-coordinate on your screen.  
-Let the constant \\(P_y\\) be equal to the pixel y-coordinate on your screen.  
-Let the constant \\(width\\) be equal to your screen's width in pixels.  
-Let the constant \\(height\\) be equal to your screen's height in pixels.  
+Let the constant \\(P_x\\) be equal to the pixel x-coordinate on the screen.  
+Let the constant \\(P_y\\) be equal to the pixel y-coordinate on the screen.  
+Let the constant \\(width\\) be equal to the screen's width in pixels.  
+Let the constant \\(height\\) be equal to the screen's height in pixels.  
   
 \\[rayDirection(P_x, P_y) = [x, y, -z]\\]
 \\[x = P_x + 0.5 - \frac{width}{2}\\]
 \\[y = P_y + 0.5 - \frac{height}{2}\\]
 \\[z = \frac{height}{tan(\frac{fov}{2})}\\]
   
-This formula applies to most physically based rendering (pbr) techniques, and the implementation itself is very straighforward.
+This expression comes in handy when using a fragment shader on a quad to render a scene.
 
-### real world usage
-As long as you can derive a function that, for any given point in 3d space, returns its distance from the closest point to any geometry in the scene, you can render pretty much anything with a great performance. Adding dynamic lighting, shadowing, occlusion and surface color would have a very low computational cost. Even changing the geometry's scale, position and rotation. Anything is valid, because everything is dynamic and computed in real time.  
+### usage
+As long as one can derive a function that, for any given point in 3d space, returns its distance from the closest point to any geometry in the scene, one can render pretty much anything with a great performance. Adding dynamic lighting, shadowing, occlusion and surface color would have a very low computational cost. Even changing the geometry's scale, position and rotation. Anything is valid, because everything is dynamic and computed in real time.  
   
-Raymarching is not mainstream in the videogame industry, the reason for this is that you __*need*__ a DE function, and in order for it to run in real time, all of it should to be computed in a fragment shader on the GPU side. When you have a world with hundreds of independent entities interacting with each other, materials to be computed, and very specific and complex geometrical shapes, it becomes counterproductive to have an efficient DE.  
+Raymarching is not mainstream in the videogame industry, and the reason for this is that **_a DE function is required_**; and in order for it to run in real time, the whole scene should to be computed in a fragment shader on the GPU side. When dealing with a world with hundreds of independent entities interacting with each other, materials to be computed, and very specific and complex geometrical shapes, it becomes counterproductive to have an efficient DE at the core of the rendering pipeline.  
   
-On the other hand, whenever you have an accurate DE, you can efficiently compute your scene using raymarching. This makes raymarching the ideal method to render complex mathematical models, such as fractals or combinations of these.  
+On the other hand, whenever the geometry can be expressed through a distance estimator, raymarching is, by far, the most elegant and efficient technique. This makes raymarching the ideal method to render complex mathematical models, such as fractals.
 
 ## pathtracing
-Pathtracing is a rendering technique derived from raytracing. We'll discuss the differences between this two terms later in this article.  
+It could be said that pathtracing derives from raytracing. However, the differences between these terms can be confusing and we'll deal with them later in this article. As for now, I'll briefly explain what pathtracing is all about.
   
-There are two important constants to define when implementing a pathtracing algorithm: the samples per pixel, and the bounces per ray.
+There are two main constants to define when implementing a pathtracing algorithm: samples per pixel and bounces per ray.
   
 The idea behind pathtracing is to *__iteratively integrate most of the light arriving to a point in the surface of the geometry__*, so that the image looks as real as possible.
 To visualize it, this is the pseudocode for a very basic pathtracing algorithm (only Lambertian reflection):
