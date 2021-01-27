@@ -26,7 +26,7 @@ Assume that we're working in 3-dimensional space; *in order to perform raymarchi
 
 The most basic DE functions represent primitive objects. [**_This_**](https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm) is a fantastic article by Íñigo Quílez on them.  
   
-For example, here one can see the DE function for a sphere \\(sphereDE\\), where \\(P\\) is the point in space that you're calculating how far apart from the sphere it is, and \\(S\\) is the scale of the sphere (assuming the sphere is located at the origin of coordinates):
+Here's the DE function for a sphere \\(sphereDE\\), where \\(P\\) is the point in space we're calculating how far apart from the sphere is, and \\(S\\) is the scale of the sphere (assuming the sphere is located at the origin of coordinates):
 
 \\[ sphereDE(P, S) = length(P) - S\\]
 ```
@@ -81,9 +81,9 @@ color raymarch(vector3 ori, vector3 dir) {
 }
 ```
 
-This is a very simple implementation, and if you were to use the returned value from this function as the value for the three color channels of each pixel, you would get a black and white image with some very obvious banding artifacts (since we're deriving the return value from two integers).  
+This is a very simple implementation, and if we were to use the returned value from this function as the value for the three color channels of each pixel, we would get a black and white image with some very obvious banding artifacts (since we're deriving the return value from two integers).  
   
-There's a lot of things regarding DEs I've left out of this explanation because they're beyond the scope of this article, such as primitive shapes transformation and combination (somewhat similar to intersection boolean operations), spatial transforms, and, my favorite, [modular repetition](https://www.youtube.com/watch?v=zy1l1SLJDo4), among many others. Slightly modifying the DE for your geometry will dramatically alter its end result.
+There's a lot of things regarding DEs I've left out of this explanation because they're beyond the scope of this article, such as primitive shapes transformation and combination (somewhat similar to intersection boolean operations), spatial transforms, and, my favorite, [modular repetition](https://www.youtube.com/watch?v=zy1l1SLJDo4), among many others. Slightly modifying the DE for the geometry will dramatically alter its end result.
 
 ### ray direction
 The following is not vital to understand raymarching; however, it is a basic implementation detail. To calculate a pixel's ray direction given a screen resolution \\(width\\) and \\(height\\) and a desired field of view \\(fov\\), I use the following expression:  
@@ -185,16 +185,16 @@ What's happening here is the following:
 * ~ Divide the 'totalColor' variable by the number of samples to get the average value for all of the samples.
 * ~ Set the pixel with 'x' and 'y' coordinates to the 'totalColor' variable value.  
 
-With a high enough value for the samples and bounces variable, you can get very photorealistic images using path tracing.
+With a high enough value for the samples and bounces variable, one can get very photorealistic images using path tracing.
 ## disambiguation
 
-If you're reading this, chances are you've heard of raytracing, and it's no coincidence raytracing, raymarching and pathtracing sound familiar.  
+If you're reading this, chances are you've heard of raytracing, and it's no coincidence raytracing, raymarching, and pathtracing all sound confusingly familiar.  
   
 All three of these PBR (physically based rendering) algorithms have something in common: *__they all use raycasting to understand a scene's geometry__*, but what each one of this algorithms accomplishes, and the way they operate is different from one another. It's also true that most researchers have slightly different understandings of these concepts, since the lines separating them are often blurry.
 I'll try to shed some light regarding the differences between these techniques based on my own experience and understanding.
 
 ### raymarching and raytracing
-In raymarching, the intersection with the scene's geometry is computed using a distance estimator, as we've recently seen. On the other hand, raytracing computes the intersection analitically, not requiring a DE. Coming up with a DE for a fractal or any mathematical model can be easy, but when you have many objects with different shapes, raymarching grows exponentially in price. This makes raytracing―although still pretty expensive―more suitable for games, and it's also the reason why raytracing isn't, and probably won't be, the mainstream rendering technique.  
+In raymarching, the intersection with the scene's geometry is computed using a distance estimator, as we've recently seen. On the other hand, raytracing computes the intersection analitically, not requiring a DE. Coming up with a DE for a fractal or any mathematical model can be easy, but when there are many objects with different shapes, raymarching grows exponentially in price. This makes raytracing―although still pretty expensive―more suitable for games, and it's also the reason why raytracing isn't, and probably won't be, the mainstream rendering technique.  
 That being said, raymarching is awesome; as I mentioned earlier, when used properly, it can deliver unprecedented performance on very specific applications, and its simplicity makes it very straightforward to understand, implement, and maintain.  
 
 ### pathtracing and raytracing
@@ -202,10 +202,10 @@ Pathtracing is a physically based rendering (PBR) technique that relies on the m
 In the case of **_idyll_**, each point of intersection from a camera ray intersecting the geometry is pathtraced to compute the amount of light arriving to that point; a combination of pathtracing and raytring.  
 
 ## union of raymarching and pathtracing
-Now you can see how raymarching and pathtracing can be complementary to each other, making for a solid rendering pipeline:  
-With raymarching, you can check whether a ray intersects the geometry and where. Then, you can use pathtracing to integrate the global illumination arriving at the point of intersection between the surface of the geometry and the marched ray.  
+Raymarching and pathtracing can be complementary to each other, making for a solid rendering pipeline:  
+With raymarching, one can check whether a ray intersects the geometry and where. Then, one can use pathtracing to integrate the global illumination arriving at the point of intersection between the surface of the geometry and the marched ray.  
    
-In *__idyll__*, pathtracing computes the global lighting, but doesn't compute the point of intersection with the geometry. On the other hand, raymarching computes the point of intersection with the geometry, but doesn't compute lighting. This is an oversimplification, as the actual relation between the two techniques is a bit more entangled, but you get the overall picture.
+In *__idyll__*, pathtracing computes the global lighting, but doesn't compute the point of intersection with the geometry. On the other hand, raymarching computes the point of intersection with the geometry, but doesn't compute lighting. Although this is an oversimplification, since the actual relation between these two techniques is a bit more entangled.
 ## results
 After properly implementing these techniques, and throwing some iterative fractals into the mix, I developed [**_idyll_**](https://github.com/soybin/idyll), a fractal engine that can create beautiful renders like the following:  
 
