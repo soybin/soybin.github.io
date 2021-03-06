@@ -11,17 +11,14 @@ title: compute clouds from randomness
 ## preamble
 Can we say there's anything *not* random?  
 
-When looking at the picture of life from a human perspective, everything is perfectly defined; it all looks like it has a purpose. However, questioning life from a broader perspective makes the very concept of existence seem absurd. How can anything *be*? Rather, *why* can anything *be*? This sort of basic questions, to which we have no good answer, are a reminder of just how random life is. We don't even know why we're here, yet we know why we engage in complex activities such as finishing this sentence. In general terms, we fail to understand the fundamental reasons behind our mere existence, understanding only that which we arbitrarily build on top of it. The only explanation I can give to such a bizarre situation is pure and absolute randomness. After all, we *are* living on a wet rock wandering around space.  
+When looking at the picture of life from a human perspective, everything is perfectly defined; it all looks like it has a purpose. However, questioning life from a broader perspective makes the very concept of existence seem absurd. How can anything *be*? Rather, *why* can anything *be*? This sort of basic question, to which we have no satisfactory answer, is a good reminder of just how random life is. We don't even know why we're here, yet we know why we engage in complex activities such as finishing this sentence. In summary, we fail to understand the fundamental reasons behind our mere existence, understanding only that which we arbitrarily build on top of it.  
 
-To avoid falling into complete nihilism, I prefer thinking that everything is *indefinitely random*. I believe that's not only fair but also elegant; randomness underlies the core of our very existence. Thus, being able to compute it is central to, not only the accurate simulation of the universe, but its understanding too.  
-
-That being said, let's talk about how can we use randomness to model the specific part of the universe that concerns us today.  
-
+Randomness underlies the very core of existance; therefore, being able to compute it is central to this universe's accurate simulation. That being said, let's talk about how can we use randomness to model the specific part of the universe concerning us today.  
 Clouds.  
 
-Round, fluffy, and—in my opinion—quite magnificient. You could probably identify an infinite number of different clouds as clouds; there's a common pattern to all of them. That is, they're made of water (mostly), so the way light interacts with them is similar among the different types of clouds—giving them their characteristic look. The main parameter that makes every cloud unique is its shape. Therefore, we could deduce that defining the shape of a cloud with randomness and uniformely rendering them will yield organic results.  
+Round, fluffy, and—in my opinion—quite magnificient. One could probably identify an infinite number of different clouds as clouds; there's a common pattern to all of them. That is, they're made of water (mostly), so the way light interacts with them is similar among the different types of clouds—giving them their characteristic look. The main variable that makes every cloud unique is its shape. Therefore, we could deduce that defining the shape of a cloud with randomness and uniformely rendering them will yield organic results.  
 
-"But it doesn't make sense to define the shape of something with randomness!" — I hear you say. You're partially right; it doesn't make much sense to define the shape of something we already know with pure randomness. However, when we apply some rules and constraints to randomness—that is, we *arrange* randomness—things turn out to be a lot more interesting.
+"But it doesn't make sense to define the shape of something with randomness!" — I can hear the reader say. And he's partially right; it doesn't make much sense to define the shape of something we already know with pure randomness. However, when we apply some rules and constraints to randomness—that is, *arranging* randomness—things turn out to be more interesting.
 
 ## noise
 Noise is *arranged randomness* (although that's only the way I personally like to think about it and not a real definition). Extending this line of reasoning, we can think of nature itself as arranged randomness too. Clouds are a part of nature, which means there must be a way to arrange randomness which will inevitably result in clouds.  
@@ -40,11 +37,11 @@ Worley noise is a simple way to arrange randomness capable of generating Voronoi
 
 In addition, we must consider whether the current cell is located at the boundaries of the cube. If that's the case, in order to avoid discontinuity on the resulting texture, we must take into account the cells that would be posed in the cell's boundaries if the texture repeated continuously along every axis.  
 
-*You can see the result of the described algorithm in the following gif, where I'm iterating over the different depth layers of a 256x256x256 Worley noise 3D texture.*
+*The reader can appreciate the result of the described algorithm in the following gif, where I iterate over the different depth layers of a 256x256x256 Worley noise 3D texture.*
 
 <img src="../../../../gifs/ao_worley_simple.gif" width="60%"/>  
 
-Although this starts to look promising, you probably haven't seen many clouds with perfectly delimited boundaries such as the ones we can see here. Fortunately, that has an easy solution.  
+Although this starts to look promising, the reader hasn't probably seen many clouds with perfectly delimited boundaries such as the ones we can see here. Fortunately, that has an easy solution.  
 
 Combining different layers of worley noise with different frequencies gives a much more organic result. I used a persistency parameter *p* to determine how mixed up the layers should be. The first one has a weight of 1, the second one has a weight of *p*, and the third one has a weight of *p^2*. This value is normalized over *1 + p + p^2*.
 
@@ -68,9 +65,9 @@ I use three different noise textures in ao. I'll proceed to explain each one of 
 
 * Second, a detail noise 3D texture; this texture should have less resolution than the main texture, and it will serve the purpose of adding detail to the edges of the cloud.  
 
-* Third, a weather noise 2D (or 3D) texture; this one determines where should we consider computing clouds. Although it's not essential for a small number of clouds, it makes it harder to notice a repetition pattern when you're looking at a large number of them, making the simulation more realistic.  
+* Third, a weather noise 2D (or 3D) texture; this one determines where should we consider computing clouds. Although it's not essential for a small number of clouds, it makes it harder to notice a repetition pattern when one is looking at a large number of them, making the simulation more realistic.  
 
-(Note that the number of subdivisions and persistence parameter should be modulated according to the kind of cloud intented to achieve. The same applies to the rest of variables here. Also, this is just the way I decided to do things; depending on your specific application you may need -2, 2, or 20 more noise layers.)  
+(Note that the number of subdivisions and persistence parameter should be modulated according to the kind of cloud intented to achieve. The same applies to the rest of variables here. Also, this is just the way I decided to do things; depending on one's specific application, one may need -2, 2, or 20 more noise layers.)  
 
 Using these noise layers, we can already build the density function \\(density(\vec{pos})\\), where \\(\vec{pos}\\) is a vector representing a point in space. There's not a magic formula to writing a good density function, as it will depend on the project's intrinsecalities. The only requirement for it is to return the density produced by the combination of the different noise layers properly scaled to the specified frame of reference.  
 
@@ -117,7 +114,7 @@ float density(vec3 pos) {
 }
 ```
 
-As you can see, the function samples the weather 2D noise and main 3D noise and checks whether the density is above a minimum threshold or not. In affirmative case, it subtracts the detail 3D noise from the resulting density (so that the edges look organic, as I previously mentioned). Otherwise, it returns a density of 0 (simply meaning there's no cloud at that point).  
+This function samples the weather 2D noise and main 3D noise and checks whether the density is above a minimum threshold or not. In affirmative case, it subtracts the detail 3D noise from the resulting density (so that the edges look organic, as I previously mentioned). Otherwise, it returns a density of 0 (simply meaning there's no cloud at that point).  
 
 Note:
 
@@ -129,7 +126,7 @@ Note:
 
 * The resulting density value is multiplied by a "cloud_density_multiplier" variable, which turns out to be exactly what its name is: a factor that scales the cloud's density.  
 
-This is very nice; we can now sample the density of different noise layers that resemble clouds. However, you probably want to restrict density sampling to a specific region in space, rendering the clouds exclusively within that space. That brings our focus to raytracing.
+This is very nice; we can now sample the density of different noise layers that resemble clouds. However, one probably wants to restrict density sampling to a specific region in space, rendering the clouds exclusively within that space. That brings our focus to raytracing.
 
 ## raytracing
 
@@ -244,16 +241,15 @@ The idea for our cloud rendering algorithm is to raytrace the cloud volume, inte
 
 * Finally, as the definitive pixel color, we can return the color of whatever we rendered previous to the clouds (a skybox perhaps) multiplied by the radiance plus the color vector we calculated for the clouds.  
 
-That sure was intense, but don't let the apparent difficulty of this intimidate you; if you think it through, it all makes a lot of sense. In fact, anyone who pondered for long enough at this physical phenomena could have come up with these approximations.  
+That sure was intense, but the reader shouldn't be intimidated by the apparent difficulty of the topic; it all makes a lot of sense. In fact, anyone who pondered for long enough at this physical phenomena and was persistant enough could have come up with these approximations.  
 
 ## that's all folks!
 
-I hope you could get a glance of one possible way to translate clouds to ones and zeros.  
+I hope the reader could get a glance of one possible way to translate clouds to ones and zeros.  
 
-I also hope you could appreciate some of the beauty underlying computational physics.  
+I also hope the reader could appreciate some of the beauty underlying computational physics.  
 
-But, above all, I hope you could appreciate the subtle relation between reality and randomness.  
-
+But, above all, I hope the reader was able to appreciate the power of almighty randomness.  
 
 <img src="../../../../gifs/ao_final.gif" width="100%"/>  
 
